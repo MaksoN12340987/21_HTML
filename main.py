@@ -2,7 +2,6 @@ import logging
 
 
 from src.local_server import MyServer
-from src.read_write_file import FileManager
 from http.server import HTTPServer
 
 
@@ -23,11 +22,7 @@ def main():
     serverPort = 8080
     
     
-    content = FileManager("./ui/main.html")
-    main_page_content = MyServer(content.read_any_files())
-    
-    
-    webServer = HTTPServer((hostName, serverPort), server_content)
+    webServer = HTTPServer((hostName, serverPort), MyServer)
     print("Server started http://%s:%s" % (hostName, serverPort))
 
     try:

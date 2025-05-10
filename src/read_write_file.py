@@ -1,7 +1,7 @@
 
 import json
 import logging
-import pandas as pd # type: ignore
+import pandas as pd
 
 logger_file_manager = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w", encoding="UTF8")
@@ -30,7 +30,7 @@ class FileManager:
 
         logger_file_manager.info("Get started conversion_json_to_object")
         try:
-            with open(file_name, "rb") as f:
+            with open(file_name, "rb", encoding="utf-8") as f:
                 file_contents = pd.read_excel(f).to_dict("records")
 
         except FileNotFoundError:
@@ -51,7 +51,7 @@ class FileManager:
 
         logger_file_manager.info("Get started conversion_json_to_object")
         try:
-            with open(file_name, "rb") as f:
+            with open(file_name, "rb", encoding="utf-8") as f:
                 file_contents = json.load(f)
 
         except FileNotFoundError:
@@ -70,11 +70,12 @@ class FileManager:
             file_name = self.__file_name        
 
         try:
-            with open(file_name, "rb") as f:
+            with open(file_name, "r", encoding="utf-8") as f:
                 file_contents = f.read()
-
+                
         except FileNotFoundError:
             logger_file_manager.warning('ERROR File not found, return ""')
             file_contents = ""
 
+        logger_file_manager.warning(file_contents)
         return file_contents
