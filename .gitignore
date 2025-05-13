@@ -126,6 +126,9 @@ celerybeat.pid
 
 # mkdocs documentation
 /site
+.png
+.werb
+.svg
 
 # mypy
 .mypy_cache/
