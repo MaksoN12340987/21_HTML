@@ -31,26 +31,18 @@ class MyServer(BaseHTTPRequestHandler, FileManager):
         else:
             return self.read_any_files("./ui/main.html")
 
-        return 'Article not found!'
-
-    def __get_blog_article(self, page_address):
-        return f"""
-        <html><head><title>Blog</title></head><body>
-        <a href="/">Back</a><br>
-        <p>{self.__get_article_content(page_address)}</p>
-        </body>
-        </html>
-        """
-
     def do_GET(self):
         query_components = parse_qs(urlparse(self.path).query)
+        
         page_address = query_components.get('page')
+        
         page_content = self.__create_main_page()
-        logger_server.info(page_content)
         
         if page_address:
-            page_content = self.__get_blog_article(page_address[0])
+            page_content = self.__get_article_content(page_address[0])
+
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
+            
         self.wfile.write(bytes(page_content, "utf-8"))
